@@ -1,3 +1,13 @@
 .starting--h1 {
-    border: 1px solid var(--blue-color);
+    margin-bottom: 0;
+    letter-spacing: 2px;
+}
+
+.starting--p {
+    margin: 10px auto 30px auto;
+}
+
+.start-btn {
+    font-size: 16px;
+    font-family: 'Karla', sans-serif;
 }
