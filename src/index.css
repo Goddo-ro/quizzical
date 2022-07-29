@@ -1,6 +1,14 @@
 :root {
   --blue-color: #293264;
+  --light-blue-color: #DBDEF0;
   --white-color: #F5F7FB;
+  --green-color: #94D7A2;
+  --red-color: #F8BCBC;
+  --answer-opacity: 0.5;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
@@ -14,6 +22,8 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  padding: 40px;
+  position: relative;
 }
 
 code {
