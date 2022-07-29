@@ -22,7 +22,7 @@ export default function Question(props) {
         }
         return <div key={nanoid()} 
             className={`answer ${ans.isHendled && !ans.status && "hendled"} ${status}`} 
-            onClick={props.answerClick}>{ans.answer}</div>
+            onClick={props.answerClick}>{htmlDecode(ans.answer)}</div>
         }
     )
 
