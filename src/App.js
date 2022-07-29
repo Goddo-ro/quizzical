@@ -1,5 +1,6 @@
 import './App.css';
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
+import { trackPromise } from 'react-promise-tracker';
 import { nanoid } from 'nanoid'
 import Question from './components/Question/Question';
 import Starting from './components/Starting/Starting';
@@ -13,7 +14,7 @@ function App() {
   const [countOfCorrect, setCountOfCorrect] = useState(0)
 
   function handleStartButton() {
-    fetch("https://opentdb.com/api.php?amount=5")
+    trackPromise(fetch("https://opentdb.com/api.php?amount=5")
       .then(res => res.json())
       .then(data => {
         const result = data.results;
@@ -37,7 +38,7 @@ function App() {
           resultsQuestions.push(resultsQuestion);
         }
         setQuestions(resultsQuestions);
-      })
+      }));
     setStart(true);
     setFinished(false);
   }
@@ -103,12 +104,14 @@ function App() {
         : <form className="questions">
             {questionsElements}
             { !isFinished 
-                ? <div className="button-container">
-                    <button 
-                        onClick={checkAnswers} 
-                        className="btn"
-                        type="button">Check answers</button>
-                  </div>
+                ? questions.length 
+                  ? <div className="button-container">
+                      <button 
+                          onClick={checkAnswers} 
+                          className="btn"
+                          type="button">Check answers</button>
+                    </div>
+                  : ""
                 : <div className="score">
                     <h2>
                       {`You scored ${countOfCorrect}/${questions.length} 
