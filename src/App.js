@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { trackPromise } from 'react-promise-tracker';
 import { nanoid } from 'nanoid'
 import Question from './components/Question/Question';
@@ -8,10 +8,25 @@ import blob5 from './images/blob5.png';
 import blob51 from './images/blob5-1.png';
 
 function App() {
-  const [isStart, setStart] = useState(false);
-  const [isFinished, setFinished] = useState(false);
-  const [questions, setQuestions] = useState([]);
-  const [countOfCorrect, setCountOfCorrect] = useState(0)
+  const [isStart, setStart] = useState((localStorage.getItem('isStart') && 
+                                          JSON.parse(localStorage.getItem('isStart'))) || 
+                                              false);
+  const [isFinished, setFinished] = useState((localStorage.getItem('isFinished') && 
+                                                  JSON.parse(localStorage.getItem('isFinished'))) || 
+                                                      false);
+  const [questions, setQuestions] = useState((localStorage.getItem('questions') && 
+                                                  JSON.parse(localStorage.getItem('questions'))) 
+                                                      || []);
+  const [countOfCorrect, setCountOfCorrect] = useState((localStorage.getItem('countOfCorrect') && 
+                                                          JSON.parse(localStorage.getItem('countOfCorrect'))) || 
+                                                              0)
+
+  useEffect(() => {
+    localStorage.setItem('isStart', isStart);
+    localStorage.setItem('isFinished', isFinished);
+    localStorage.setItem('questions', JSON.stringify(questions));
+    localStorage.setItem('countOfCorrect', countOfCorrect);
+  }, [isStart, isFinished, questions, countOfCorrect]);
 
   function handleStartButton() {
     trackPromise(fetch("https://opentdb.com/api.php?amount=5")
